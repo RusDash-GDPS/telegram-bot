@@ -203,7 +203,7 @@ if(!empty($data))
             }
         break;
         case "/tclose":
-        case "/tclose@RDashBot":
+        case "/tclose{$botUserName}":
              require_once "../../incl/lib/connection.php";
              if(str_starts_with($data["message"]["chat"]["id"], "-") && $data["message"]["chat"]["id"] == $supportGroupID)
              {
@@ -305,7 +305,7 @@ if(!empty($data))
              }
         break;
         case "/start":
-        case "/start@RDashBot":
+        case "/start{$botUserName}":
             $method = "sendMessage";
             $send_data = [
                 "chat_id" => $data["message"]["chat"]["id"],
@@ -315,7 +315,7 @@ if(!empty($data))
             ];
         break;
         case "/tclose":
-        case "/tclose@RDashBot":
+        case "/tclose{$botUserName}":
         break;
         case "/lv":
         case "/lv{$botUserName}":
@@ -699,6 +699,7 @@ if(!empty($data))
 }
 
   
+
 
 
 
