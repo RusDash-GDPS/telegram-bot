@@ -1,14 +1,14 @@
 <?php
-require_once "../../incl/lib/generatePass.php";
-
 $data = json_decode(file_get_contents("php://input"), true);
 $botUserName = "@bot"; # Тут ваш юз бота
 $supportGroupID = "0"; # Тут ваша группа саппорта
 $botUserID = "0"; # Ваш ID бота
 function sendTelegramQuery($method, $send_data)
 {
-    $keys = include __DIR__ . "путь/до/вашего_токена"; // или $keys = "ваш_токен";
+    $keys = include __DIR__ . "путь/до/вашего_токена";
     $bot_token = $keys["telegram_key"];
+    /* На случай если нет файла с токенами замените верхние две строки на
+    $bot_token = "токен_бота"; */
     $ch = curl_init("https://api.telegram.org/bot{$bot_token}/{$method}");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $send_data);
@@ -22,6 +22,7 @@ function sendTelegramQuery($method, $send_data)
 
 if(!empty($data))
 {
+    # Обработка запросов нажатия на кнопки
     if(isset($data["callback_query"]))
     {
         $callbackQuery = $data["callback_query"];
@@ -185,7 +186,12 @@ if(!empty($data))
             ];
                 sendTelegramQuery($mtd, $dt);
               }
-              if(!str_starts_with($data["message"]["chat"]["id"], "-"))
+                $ticketQuery = $db->prepare("SELECT stateData FROM tg_users WHERE userID LIKE :uID");
+                $ticketQuery->execute([":uID" => $data["message]["from"]["id"]);
+                $stateData = $ticketQuery->fetchColumn();
+
+                $theme = explode(":", $stateData)[1];
+              if(!str_starts_with($data["message"]["chat"]["id"], "-") && $data["message"]["text"] != $theme)
               {
                               $method = "forwardMessage";
               $send_data = [
@@ -693,3 +699,4 @@ if(!empty($data))
 }
 
   
+
