@@ -297,7 +297,7 @@ if(!empty($data))
                  $mtd = "sendMessage";
                  $dt = [
                 "chat_id" => $supportGroupID,
-                "text" => "ℹ️ *Тикет закрыт автором*",
+                "text" => "ℹ️ *Тикет ".$data["message"]["chat"]["id"]." закрыт автором*",
                 "parse_mode" => "Markdown"
             ];
                  sendTelegramQuery($mtd, $dt);
@@ -699,6 +699,7 @@ if(!empty($data))
 }
 
   
+
 
 
 
