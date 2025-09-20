@@ -7,7 +7,7 @@ $supportGroupID = "0"; # Тут ваша группа саппорта
 $botUserID = "0"; # Ваш ID бота
 function sendTelegramQuery($method, $send_data)
 {
-    $keys = include __DIR__ . "путь/до/вашего_ключа"; // или "ключ_бота"
+    $keys = include __DIR__ . "путь/до/вашего_токена"; // или $keys = "ваш_токен";
     $bot_token = $keys["telegram_key"];
     $ch = curl_init("https://api.telegram.org/bot{$bot_token}/{$method}");
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -691,4 +691,5 @@ if(!empty($data))
     
     sendTelegramQuery($method, $send_data);
 }
+
   
