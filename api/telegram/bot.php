@@ -187,7 +187,7 @@ if(!empty($data))
                 sendTelegramQuery($mtd, $dt);
               }
                 $ticketQuery = $db->prepare("SELECT stateData FROM tg_users WHERE userID LIKE :uID");
-                $ticketQuery->execute([":uID" => $data["message]["from"]["id"]);
+                $ticketQuery->execute([":uID" => $data["message"]["from"]["id"]);
                 $stateData = $ticketQuery->fetchColumn();
 
                 $theme = explode(":", $stateData)[1];
@@ -699,4 +699,5 @@ if(!empty($data))
 }
 
   
+
 
